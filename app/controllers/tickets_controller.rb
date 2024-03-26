@@ -1,5 +1,6 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!, except: [:enter]
+  before_action :total
 
   def index
     @tickets = Ticket.all.reverse
@@ -11,7 +12,7 @@ class TicketsController < ApplicationController
     @svg = qrcode.as_svg(
       color: "000",
       shape_rendering: "crispEdges",
-      module_size: 12,
+      module_size: 6,
       standalone: true,
       use_path: true
     )
@@ -32,6 +33,11 @@ class TicketsController < ApplicationController
     else
       redirect_to "https://alfaeventsteam.wixsite.com/alfaevents", allow_other_host: true
     end
+  end
+
+  def total
+    @total = Ticket.all.count
+    @entered = Ticket.where(vazecka: false).count
   end
 
 end

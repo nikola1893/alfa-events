@@ -1,5 +1,10 @@
+<%= link_to "Go back", tickets_path %>
 <h1>Ticket: <%= @ticket.token %> </h1>
-<p>Valid: <%= @ticket.vazecka %></p>
-<p>Updated at: <%= @ticket.updated_at %></p>
- <%= raw(@svg.html_safe) %>
+
+<% if !@ticket.vazecka? %>
+    <p>Updated at: <%= @ticket.updated_at %></p>
+<% end %>
+<p><%= @entered %> / <%= @total %> guests entered</p>
+
+<%= raw(@svg.html_safe) %>
 

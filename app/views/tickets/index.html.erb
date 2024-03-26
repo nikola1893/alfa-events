@@ -1,4 +1,5 @@
 <h1>Tickets</h1>
+<p><%= @entered %> / <%= @total %> guests entered</p>
 
 <% @tickets.each do |ticket| %>
     <p><%= link_to ticket.token, ticket_path(ticket.token) %> : <%= ticket.vazecka %></p>
