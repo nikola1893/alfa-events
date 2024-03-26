@@ -3,18 +3,19 @@ class TicketsController < ApplicationController
   before_action :total
 
   def index
-    @tickets = Ticket.all.reverse
+    @tickets = Ticket.all.order(:created_at)
   end
 
   def show
     @ticket = Ticket.find_by(token: params[:token])
     qrcode = RQRCode::QRCode.new("https://alfa-events-bafea2c349ed.herokuapp.com/tickets/#{@ticket.token}/enter")
     @svg = qrcode.as_svg(
-      color: "000",
+      color: :currentColor,
       shape_rendering: "crispEdges",
       module_size: 6,
       standalone: true,
-      use_path: true
+      use_path: true,
+      offset: 4
     )
   end
 
@@ -24,7 +25,7 @@ class TicketsController < ApplicationController
     if current_user.present?
       if @ticket.vazecka == true
         @ticket.update!(vazecka: false)
-        flash[:notice] = "Valid! Welcome to the event!"
+        flash[:notice] = "Welcome to the event!"
       # Optionally, you can redirect to another page after updating the status
       else
         flash[:alert] = "Invalid! This ticket has already been used."

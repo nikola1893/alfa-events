@@ -1,6 +1,8 @@
-<h1>Tickets</h1>
+<h2>Tickets</h2>
 <p><%= @entered %> / <%= @total %> guests entered</p>
 
+<div class="ms-display-flex ms-flex-wrap-wrap ms-flex-align-items-stretch">
 <% @tickets.each do |ticket| %>
-    <p><%= link_to ticket.token, ticket_path(ticket.token) %> : <%= ticket.vazecka %></p>
+    <%= link_to ticket.token, ticket_path(ticket.token), class: (ticket.vazecka? ? 'ms-btn ms-btn-xl ms-bg-green ms-m-1' : 'ms-btn ms-primary ms-m-1') %>
 <% end %>
+</div>

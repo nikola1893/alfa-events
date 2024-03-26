@@ -8,11 +8,21 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/minstyle.io@2.0.2/dist/css/minstyle.io.min.css">
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/dark-mode-switcher@0.0.1/dist/dark.min.js"
+    ></script>
+
   </head>
 
-  <body>
-    <p class="notice" style="color: green"><%= notice %></p>
-    <p class="alert", style="color: red"><%= alert %></p>
+  <body class="p-3 ms-text-center">
+    <% if notice.present? %>
+      <p class="ms-alert ms-bg-green" style=""><%= notice %></p>
+    <% end %>
+    <% if alert.present? %>
+      <p class="ms-alert ms-primary" style=""><%= alert %></p>
+    <% end %>
     <%= yield %>
   </body>
 </html>
