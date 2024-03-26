@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
 
   def show
     @ticket = Ticket.find_by(token: params[:token])
-    qrcode = RQRCode::QRCode.new("http://localhost:3000/tickets/#{@ticket.token}/enter}")
+    qrcode = RQRCode::QRCode.new("https://alfa-events-bafea2c349ed.herokuapp.com/tickets/#{@ticket.token}/enter}")
     @svg = qrcode.as_svg(
       color: "000",
       shape_rendering: "crispEdges",
@@ -30,7 +30,7 @@ class TicketsController < ApplicationController
       end
       redirect_to ticket_path(@ticket.token)
     else
-      redirect_to "http://www.google.com", allow_other_host: true
+      redirect_to "https://alfaeventsteam.wixsite.com/alfaevents", allow_other_host: true
     end
   end
 
