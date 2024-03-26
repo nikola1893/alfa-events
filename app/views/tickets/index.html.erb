@@ -1,0 +1,5 @@
+<h1>Tickets</h1>
+
+<% @tickets.each do |ticket| %>
+    <p><%= link_to ticket.token, ticket_path(ticket.token) %> : <%= ticket.vazecka %></p>
+<% end %>
