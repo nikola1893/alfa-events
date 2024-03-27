@@ -34,6 +34,11 @@ class TicketsController < ApplicationController
     else
       redirect_to "https://alfaeventsteam.wixsite.com/alfaevents", allow_other_host: true
     end
+
+    unless Ticket.exists?(token: @ticket.token)
+      flash[:alert] = "Invalid ticket token!"
+      redirect_to root_path
+    end
   end
 
   def total

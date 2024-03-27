@@ -1,8 +1,26 @@
-<h2>Tickets</h2>
+<h2>Билети</h2>
 <p><%= @entered %> / <%= @total %> guests entered</p>
 
+ <form id="searchForm">
+    <div class="">
+        <input style="width: 12rem;" type="text" id="searchInput" placeholder="Внеси број на тикет">
+        <input class= "ms-btn ms-primary" type="submit" value="Провери">
+    </div>
+</form>
+
+<script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        var searchInputValue = document.getElementById('searchInput').value;
+        var searchUrl = '/tickets/' + encodeURIComponent(searchInputValue) + '/enter'; // Encode the search term
+
+        window.location.href = searchUrl; // Redirect to the search URL
+    });
+</script>
+
 <div class="ms-display-flex ms-flex-wrap-wrap ms-flex-align-items-stretch">
-<% @tickets.each do |ticket| %>
-    <%= link_to ticket.token, ticket_path(ticket.token), class: (ticket.vazecka? ? 'ms-btn ms-btn-xl ms-bg-green ms-m-1' : 'ms-btn ms-primary ms-m-1') %>
-<% end %>
+    <% @tickets.each do |ticket| %>
+        <% link_to ticket.token, ticket_path(ticket.token), class: (ticket.vazecka? ? 'ms-btn ms-btn-xl ms-bg-green ms-m-1' : 'ms-btn ms-primary ms-m-1') %>
+    <% end %>
 </div>
