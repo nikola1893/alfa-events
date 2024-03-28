@@ -1,13 +1,13 @@
 
 <p class=""><%= link_to "< Back", tickets_path, class:"ms-text-light" %></p>
-<h2>Ticket: <%= @ticket.token %> </h2>
+<h2>Тикет: <%= @ticket.token %> </h2>
 
 <% if !@ticket.vazecka? %>
-    <p class="ms-text-green">Entered event at: <%= @ticket.updated_at %></p>
+    <p class="ms-text-green">Улезел: <%= @ticket.updated_at %></p>
 <% else %>
-    <p class="ms-text-green">This is a valid ticket!</p>
+    <p class="ms-text-green">Валиден тикет</p>
 <% end %>
-<p><%= @entered %> / <%= @total %> guests entered</p>
-<p>👇🏻 Scan at the entrance</p>
+<p><%= @entered %> / <%= @total %> луѓе улезеле</p>
+<p>👇🏻 QR за влез</p>
 <%= raw(@svg.html_safe) %>
 

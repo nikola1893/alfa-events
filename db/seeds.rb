@@ -8,16 +8,16 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-require_relative '../config/tokens'
+# require_relative '../config/tokens'
 
-Ticket.destroy_all
+# Ticket.destroy_all
 
-# user = User.create!(email: "kircho@alfaevents.mk", password: "password")
+# # user = User.create!(email: "kircho@alfaevents.mk", password: "password")
 
-puts "Seeding #{TOKENS.count} tickets..."
+# puts "Seeding #{TOKENS.count} tickets..."
 
-# Create tickets
-TOKENS.each_with_index do |token, i|
-    Ticket.create!(user: User.last, token: token)
-    puts "Ticket #{i + 1} created"
-end
+# # Create tickets
+# TOKENS.each_with_index do |token, i|
+#     Ticket.create!(user: User.last, token: token)
+#     puts "Ticket #{i + 1} created"
+# end

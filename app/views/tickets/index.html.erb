@@ -1,5 +1,5 @@
-<h2>Билети</h2>
-<p><%= @entered %> / <%= @total %> guests entered</p>
+<h2>Алфа Тикети</h2>
+<p><%= @entered %> / <%= @total %> луѓе узезеле</p>
 
  <form id="searchForm">
     <div class="">
@@ -18,9 +18,3 @@
         window.location.href = searchUrl; // Redirect to the search URL
     });
 </script>
-
-<div class="ms-display-flex ms-flex-wrap-wrap ms-flex-align-items-stretch">
-    <% @tickets.each do |ticket| %>
-        <% link_to ticket.token, ticket_path(ticket.token), class: (ticket.vazecka? ? 'ms-btn ms-btn-xl ms-bg-green ms-m-1' : 'ms-btn ms-primary ms-m-1') %>
-    <% end %>
-</div>
