@@ -25,19 +25,14 @@ class TicketsController < ApplicationController
     if current_user.present?
       if @ticket.vazecka == true
         @ticket.update!(vazecka: false)
-        flash[:notice] = "Welcome to the event!"
+        flash[:notice] = "Валиден тикет!"
       # Optionally, you can redirect to another page after updating the status
       else
-        flash[:alert] = "Invalid! This ticket has already been used."
+        flash[:alert] = "Невалиден тикет!"
       end
       redirect_to ticket_path(@ticket.token)
     else
       redirect_to "https://alfaeventsteam.wixsite.com/alfaevents", allow_other_host: true
-    end
-
-    unless Ticket.exists?(token: @ticket.token)
-      flash[:alert] = "Invalid ticket token!"
-      redirect_to root_path
     end
   end
 
