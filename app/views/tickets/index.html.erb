@@ -8,6 +8,39 @@
     </div>
 </form>
 
+<button id="scanButton">Scan QR Code</button>
+<script>
+    document.getElementById('scanButton').addEventListener('click', async () => {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+            const video = document.createElement('video');
+            document.body.appendChild(video);
+            video.srcObject = stream;
+            await video.play();
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const scanQRCode = () => {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                if (code) {
+                    window.location.href = code.data;
+                } else {
+                    requestAnimationFrame(scanQRCode);
+                }
+            };
+            scanQRCode();
+
+        } catch (err) {
+            console.error('Error accessing camera:', err);
+        }
+    });
+</script>
+
 <script>
     document.getElementById('searchForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission
