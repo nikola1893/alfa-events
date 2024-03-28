@@ -8,15 +8,6 @@ class TicketsController < ApplicationController
 
   def show
     @ticket = Ticket.find_by(token: params[:token])
-    qrcode = RQRCode::QRCode.new("https://alfa-events-bafea2c349ed.herokuapp.com/tickets/#{@ticket.token}/enter")
-    @svg = qrcode.as_svg(
-      color: :currentColor,
-      shape_rendering: "crispEdges",
-      module_size: 6,
-      standalone: true,
-      use_path: true,
-      offset: 4
-    )
   end
 
   def enter

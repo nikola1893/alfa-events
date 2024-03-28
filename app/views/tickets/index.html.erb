@@ -1,15 +1,9 @@
-<h2>Алфа Тикети</h2>
-<p><%= @entered %> / <%= @total %> луѓе улезеле</p>
 
- <form id="searchForm">
-    <div class="">
-        <input style="width: 12rem;" type="text" id="searchInput" placeholder="Внеси број на тикет">
-        <input class= "ms-btn ms-primary" type="submit" value="Провери">
-    </div>
-</form>
+<button id="scanButton" class="ms-btn ms-primary my-2 ms-large"><i class="fa-solid fa-barcode"></i> Скенирај тикет</button>
+<p style="color: gray">или</p>
 
-<button id="scanButton">Scan QR Code</button>
 <script>
+
     document.getElementById('scanButton').addEventListener('click', async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
@@ -23,10 +17,13 @@
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
 
+            scanButton.style.display = 'none';
+
+
             const scanQRCode = () => {
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                const code = window.jsQR(imageData.data, imageData.width, imageData.height);
                 if (code) {
                     window.location.href = code.data;
                 } else {
@@ -35,11 +32,30 @@
             };
             scanQRCode();
 
+            document.body.addEventListener('click', function(event) {
+                // Check if the click occurred outside the video element
+                if (!video.contains(event.target)) {
+                    // Refresh the page
+                    location.reload();
+                }
+            });
+
         } catch (err) {
             console.error('Error accessing camera:', err);
         }
     });
+
+    
 </script>
+
+<form id="searchForm">
+    <div class="mb-4">
+        <input style="width: 12rem;" class="ms-medium" type="text" id="searchInput" placeholder="#" required minlength="6" maxlength="6">
+        <input class= "ms-btn ms-medium mt-2 " type="submit" value="Провери">
+    </div>
+</form>
+
+<p><%= @entered %> / <%= @total %> луѓе улезеле</p>
 
 <script>
     document.getElementById('searchForm').addEventListener('submit', function(event) {

@@ -1,6 +1,6 @@
 
 <p class=""><%= link_to "<- Назад", tickets_path, class:"ms-text-light" %></p>
-<h2>Тикет: <%= @ticket.token %> </h2>
+<h3>Тикет: <%= @ticket.token %> </h3>
 
 <% if !@ticket.vazecka? %>
     <p class="ms-text-green">Улезел: <%= @ticket.updated_at %></p>
@@ -8,6 +8,3 @@
     <p class="ms-text-green">Валиден тикет</p>
 <% end %>
 <p><%= @entered %> / <%= @total %> луѓе улезеле</p>
-<p>👇🏻 QR за влез</p>
-<%= raw(@svg.html_safe) %>
-

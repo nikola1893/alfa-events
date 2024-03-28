@@ -13,16 +13,48 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/dark-mode-switcher@0.0.1/dist/dark.min.js"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.min.js"></script>
+    <script src="https://kit.fontawesome.com/857b3be6db.js" crossorigin="anonymous"></script>
+    <style>
+      .center-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100dvh; /* Use viewport height to make the container full screen height */
+      }
 
+      video {
+        width: 100%;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 5px solid #FA4D5F;
+        border-radius: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Style for the canvas element */
+      canvas {
+          width: 100%;
+          height: auto;
+          border: 5px solid #333;
+          border-radius: 20px;
+      }
+    </style>
   </head>
 
-  <body class="p-3 ms-text-center">
-    <% if notice.present? %>
-      <p class="ms-alert ms-bg-green" style=""><%= notice %></p>
-    <% end %>
-    <% if alert.present? %>
-      <p class="ms-alert ms-primary" style=""><%= alert %></p>
-    <% end %>
-    <%= yield %>
+  <body class="ms-text-center">
+    <div class="center-content">
+      <% if notice.present? %>
+        <p class="ms-alert ms-bg-green" style=""><%= notice %></p>
+      <% end %>
+      <% if alert.present? %>
+        <p class="ms-alert ms-primary" style=""><%= alert %></p>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
