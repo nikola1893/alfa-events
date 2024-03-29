@@ -3,8 +3,8 @@
 <h3>Тикет: <%= @ticket.token %> </h3>
 
 <% if !@ticket.vazecka? %>
-    <p class="ms-text-green">Улезел: <%= @ticket.updated_at %></p>
+    <p class="ms-text-secondary">Улезел: <%= @ticket.updated_at + 1.hour %></p>
 <% else %>
-    <p class="ms-text-green">Валиден тикет</p>
+    <p class="ms-text-secondary">Валиден тикет</p>
 <% end %>
 <p><%= @entered %> / <%= @total %> луѓе улезеле</p>

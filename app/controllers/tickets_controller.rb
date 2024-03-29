@@ -17,7 +17,6 @@ class TicketsController < ApplicationController
       if @ticket.vazecka == true
         @ticket.update!(vazecka: false)
         flash[:notice] = "Валиден тикет!"
-      # Optionally, you can redirect to another page after updating the status
       else
         flash[:alert] = "Невалиден тикет!"
       end
