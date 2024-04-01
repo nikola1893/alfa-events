@@ -68,8 +68,30 @@
         });
     </script>
 <% elsif current_user.kind == 'admin' %>
-    
-    <p>Продадени <%= @user_sold %> / <%= @user_total %> </p>
+    <%= link_to "Продај тикети", tickets_new_path, class:"ms-btn ms-action2 mb-4 ms-btn-active ms-large" %>
+    <table class="ms-table ms-text-left">
+        <thead>
+            <tr>
+                <th>Продавач</th>
+                <th>Лимит</th>
+                <th>Продал</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% @sellers.each do |user| %>
+            <tr>
+                <td><%= user.email %></td>
+                <td><%= user.limit %></td>
+                <td><%= user.tickets.count %></td>
+            </tr>
+        <% end %>
+            <tr>
+                <td><strong>Вкупно<strong></td>
+                <td><strong><%= @sellers.sum(:limit) %><strong></td>
+                <td><strong><%= Ticket.count %><strong></td>
+            </tr>
+        </tbody>
+    </table>
 
 <% end %>
 

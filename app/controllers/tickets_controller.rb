@@ -7,7 +7,7 @@ class TicketsController < ApplicationController
     if current_user.kind == "prodavac"
       redirect_to tickets_new_path
     elsif current_user.kind == "admin"
-      @tickets = Ticket.all
+      @sellers = User.where(kind: ["prodavac", "admin"])
     else
       
     end
@@ -28,9 +28,11 @@ class TicketsController < ApplicationController
   end
 
   def new
-    @ticket = Ticket.new
-    @sold = current_user.tickets.count
-    @limit = current_user.limit
+    if current_user.kind == "prodavac" || current_user.kind == "admin"
+      @ticket = Ticket.new    
+      @sold = current_user.tickets.count
+      @limit = current_user.limit
+    end
   end
 
   def create
@@ -45,7 +47,7 @@ class TicketsController < ApplicationController
           ticket.user = current_user
           ticket.token = SecureRandom.hex(4)
           ticket.save
-          ticket_urls << ticket_url(ticket.token) # Add ticket URL to array
+          ticket_urls << ticket_url(ticket.token)
         end
 
         client = Postmark::ApiClient.new(ENV['POSTMARK_API_TOKEN'])
@@ -54,7 +56,9 @@ class TicketsController < ApplicationController
           from: 'info@alfatickets.mk',
           to: email,
           subject: 'Купивте тикети',
-          html_body: "Повелете тикети за евентот:<br>#{ticket_urls.join('<br>')}",
+          # html_body: "Повелете тикети за евентот:<br>#{ticket_urls.join('<br>')}",
+          html_body: "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;'><h2 style='color: #333;'>Повелете тикети за евентот:</h2>#{ticket_urls.each_with_index.map { |url, index| '<a href="' + url + '" style="display: block; margin-bottom: 10px; padding: 10px; background-color: #F38025; color: white; text-decoration: none; text-align: center; border-radius: 5px;">Тикет ' + (index + 1).to_s + '</a>' }.join('')}<p style='color: #333;'><em>Click on the buttons above to access your tickets.</em></p></div>",
+
           track_opens: true,
           message_stream: 'outbound')
   
