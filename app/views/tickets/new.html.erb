@@ -1,0 +1,16 @@
+
+<%= form_with(model: @ticket, url: tickets_path, method: :post) do |f| %>
+  <%= f.label :email, "Email за достава" %>
+  <%= f.email_field :email, class:"mb-4" %>
+  <%= f.label :number_of_tickets, 'Број на тикети' %>
+  <%= f.number_field :number_of_tickets, in: 1..100, value: 1 %>
+
+
+  <%= f.submit "Продај тикети", class:"ms-btn ms-action2 my-4 ms-large" %>
+<% end %>
+<br>
+<br>
+Продашно место: <%= current_user.email %>
+<br>
+<br>
+<%= @sold %> / <%= @limit %> тикети продадени

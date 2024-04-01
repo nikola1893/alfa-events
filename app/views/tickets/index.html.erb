@@ -1,69 +1,76 @@
 
-<button id="scanButton" class="ms-btn ms-action2 mb-3 ms-btn-active ms-large"><i class="fa-solid fa-barcode"></i> Скенирај тикет</button>
-<p style="color: gray">или</p>
+<% if current_user.kind == 'doorman' %>
+    <button id="scanButton" class="ms-btn ms-action2 mb-3 ms-btn-active ms-large"><i class="fa-solid fa-barcode"></i> Скенирај тикет</button>
+    <p style="color: gray">или</p>
+    <script>
 
-<script>
+        document.getElementById('scanButton').addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+                const video = document.createElement('video');
+                document.body.appendChild(video);
+                video.srcObject = stream;
+                await video.play();
 
-    document.getElementById('scanButton').addEventListener('click', async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-            const video = document.createElement('video');
-            document.body.appendChild(video);
-            video.srcObject = stream;
-            await video.play();
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
 
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-
-            scanButton.style.display = 'none';
+                scanButton.style.display = 'none';
 
 
-            const scanQRCode = () => {
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                const code = window.jsQR(imageData.data, imageData.width, imageData.height);
-                if (code) {
-                    window.location.href = code.data;
-                } else {
-                    requestAnimationFrame(scanQRCode);
-                }
-            };
-            scanQRCode();
+                const scanQRCode = () => {
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                    const code = window.jsQR(imageData.data, imageData.width, imageData.height);
+                    if (code) {
+                        window.location.href = code.data;
+                    } else {
+                        requestAnimationFrame(scanQRCode);
+                    }
+                };
+                scanQRCode();
 
-            document.body.addEventListener('click', function(event) {
-                // Check if the click occurred outside the video element
-                if (!video.contains(event.target)) {
-                    // Refresh the page
-                    location.reload();
-                }
-            });
+                document.body.addEventListener('click', function(event) {
+                    // Check if the click occurred outside the video element
+                    if (!video.contains(event.target)) {
+                        // Refresh the page
+                        location.reload();
+                    }
+                });
 
-        } catch (err) {
-            console.error('Error accessing camera:', err);
-        }
-    });
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+            }
+        });
 
+        
+    </script>
+
+    <form id="searchForm">
+        <div class="mb-4">
+            <input style="width: 12rem;" class="ms-medium" type="text" id="searchInput" placeholder="#" required minlength="6" maxlength="6">
+            <input class= "ms-btn ms-medium mt-2 " type="submit" value="Провери">
+        </div>
+    </form>
+
+    <p><%= @entered %> / <%= @total %> луѓе улезеле</p>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            var searchInputValue = document.getElementById('searchInput').value;
+            var searchUrl = '/tickets/' + encodeURIComponent(searchInputValue) + '/enter'; // Encode the search term
+
+            window.location.href = searchUrl; // Redirect to the search URL
+        });
+    </script>
+<% elsif current_user.kind == 'admin' %>
     
-</script>
+    <p>Продадени <%= @user_sold %> / <%= @user_total %> </p>
 
-<form id="searchForm">
-    <div class="mb-4">
-        <input style="width: 12rem;" class="ms-medium" type="text" id="searchInput" placeholder="#" required minlength="6" maxlength="6">
-        <input class= "ms-btn ms-medium mt-2 " type="submit" value="Провери">
-    </div>
-</form>
+<% end %>
 
-<p><%= @entered %> / <%= @total %> луѓе улезеле</p>
 
-<script>
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
-        var searchInputValue = document.getElementById('searchInput').value;
-        var searchUrl = '/tickets/' + encodeURIComponent(searchInputValue) + '/enter'; // Encode the search term
-
-        window.location.href = searchUrl; // Redirect to the search URL
-    });
-</script>

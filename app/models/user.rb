@@ -5,4 +5,9 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :rememberable,
          :validatable
+
+  def remaining_tickets
+    limit - tickets.count
+  end
+
 end
