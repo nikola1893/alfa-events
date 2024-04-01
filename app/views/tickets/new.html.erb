@@ -1,6 +1,6 @@
 
 <% if current_user.kind == "admin" %>
-  <%= link_to "<- Назад", root_path, class:"mb-5 ms-action2" %>
+  <%= link_to "<- Назад", root_path, class:"mb-5 ms-text-main" %>
 <% end %>
 <%= form_with(model: @ticket, url: tickets_path, method: :post) do |f| %>
     
