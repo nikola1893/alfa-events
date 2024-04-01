@@ -8480,6 +8480,9 @@
         <p class="ms-alert ms-light ms-primary" style=""><%= alert %></p>
       <% end %>
       <%= yield %>
+      <% if current_user.present? %>
+        <%= button_to "Одјави се", destroy_user_session_path, method: :delete, class:"mt-3" %>
+      <% end %>
     </div>
   </body>
 </html>
