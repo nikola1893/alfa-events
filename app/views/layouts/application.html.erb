@@ -8447,7 +8447,7 @@
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          height: 100dvh; /* Use viewport height to make the container full screen height */
+          height: 70vh; /* Use viewport height to make the container full screen height */
       }
 
       video {
@@ -8472,7 +8472,12 @@
   </head>
 
   <body class="ms-text-center mx-4">
+    <div class="ms-display-flex m-4 ms-flex-justify-center ms-flex-align-items-center">
+      <%= image_tag "logo.png", style: "width: 2.25rem;", class:"m-1" %>
+      <p class="m-0" style="line-height: 1.25rem; font-size: 1.5rem">AlfaEvents</p>
+    </div>
     <div class="center-content">
+
       <% if notice.present? %>
         <p class="ms-alert ms-light ms-secondary" style=""><%= notice %></p>
       <% end %>
