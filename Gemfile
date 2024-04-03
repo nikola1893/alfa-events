@@ -9,6 +9,7 @@ gem "devise"
 gem "rqrcode"
 gem 'postmark', group: :production
 gem 'postmark-rails'
+gem 'chunky_png'
 
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]

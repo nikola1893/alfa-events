@@ -15,7 +15,7 @@ class TicketsController < ApplicationController
 
   def show
     @ticket = Ticket.find_by(token: params[:token])
-    qrcode = RQRCode::QRCode.new("https://alfa-events-bafea2c349ed.herokuapp.com/tickets/#{@ticket.token}/enter")
+    qrcode = RQRCode::QRCode.new("https://www.alfatickets.mk/tickets/#{@ticket.token}/enter")
     @svg = qrcode.as_svg(
       color: :black,
       offset: 12,
@@ -56,7 +56,6 @@ class TicketsController < ApplicationController
           from: 'info@alfatickets.mk',
           to: email,
           subject: 'Купивте тикети',
-          # html_body: "Повелете тикети за евентот:<br>#{ticket_urls.join('<br>')}",
           html_body: "<div style='font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;'><h2 style='color: #333;'>Повелете тикети за евентот:</h2>#{ticket_urls.each_with_index.map { |url, index| '<a href="' + url + '" style="display: block; margin-bottom: 10px; padding: 10px; background-color: #F38025; color: white; text-decoration: none; text-align: center; border-radius: 5px;">Тикет ' + (index + 1).to_s + '</a>' }.join('')}<p style='color: #333;'><em>Click on the buttons above to access your tickets.</em></p></div>",
 
           track_opens: true,

@@ -6,7 +6,7 @@ class Ticket < ApplicationRecord
   def self.print_qr_codes
     desktop_folder_path = File.expand_path("~/Desktop/alfa-tickets")
     all.each_with_index do |ticket, i|
-      qrcode = RQRCode::QRCode.new("https://alfa-events-bafea2c349ed.herokuapp.com/tickets/#{ticket.token}/enter")
+      qrcode = RQRCode::QRCode.new("https://www.alfatickets.mk/tickets/#{ticket.token}/enter")
       qr = qrcode.as_png(
         resize_gte_to: false,
         resize_exactly_to: false,
@@ -19,15 +19,13 @@ class Ticket < ApplicationRecord
       qr_image = ChunkyPNG::Image.from_blob(qr.to_s)
   
       ticket_image = ChunkyPNG::Image.from_file("#{desktop_folder_path}/assets/ticket-design.png")
-      y_offset = 278
-      x_offset = 825
+      y_offset = 250
+      x_offset = 832
       ticket_image.compose!(qr_image, x_offset, y_offset)
 
       token_images = {}
-      # ('a'..'z').each { |char| token_images[char] = ChunkyPNG::Image.from_file("#{desktop_folder_path}/assets/#{char}.png") }
       ('a'..'z').each do |char|
         image = ChunkyPNG::Image.from_file("#{desktop_folder_path}/assets/#{char}.png")
-        # Make the image 50% transparent
         image.compose!(ChunkyPNG::Image.new(image.width, image.height, ChunkyPNG::Color::TRANSPARENT), 0, 0)
         token_images[char] = image
       end

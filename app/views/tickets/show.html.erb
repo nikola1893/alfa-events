@@ -3,7 +3,6 @@
     <p class=""><%= link_to "<- Назад", tickets_path, class:"ms-text-light" %></p>
 <% end %>
 <h4>Тикет: <%= @ticket.token %> </h4>
-<p>Емаил: <%= @ticket.email %></p>
 
 <% if !@ticket.vazecka? %>
     <p class="ms-text-secondary">Улезел: <%= @ticket.updated_at + 2.hour %></p>
