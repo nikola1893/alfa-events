@@ -10,17 +10,17 @@ class Ticket < ApplicationRecord
       qr = qrcode.as_png(
         resize_gte_to: false,
         resize_exactly_to: false,
-        offset: 7,
+        offset: 10,
         color: 'black',
-        size: 200,
+        size: 300,
         file: nil
       )
   
       qr_image = ChunkyPNG::Image.from_blob(qr.to_s)
   
       ticket_image = ChunkyPNG::Image.from_file("#{desktop_folder_path}/assets/ticket-design.png")
-      y_offset = 250
-      x_offset = 832
+      y_offset = 225
+      x_offset = 1110
       ticket_image.compose!(qr_image, x_offset, y_offset)
 
       token_images = {}
@@ -31,8 +31,8 @@ class Ticket < ApplicationRecord
       end
       ('0'..'9').each { |char| token_images[char] = ChunkyPNG::Image.from_file("#{desktop_folder_path}/assets/#{char}.png") }
 
-      x_offset = 200
-      y_offset = 20
+      x_offset = 1575
+      y_offset = 25
       ticket.token.each_char do |char|
         ticket_image.compose!(token_images[char.downcase], x_offset, y_offset)
         x_offset += token_images[char.downcase].width - 1
