@@ -10,7 +10,7 @@
 
 require_relative '../config/tokens'
 
-Ticket.destroy_all
+# Ticket.destroy_all
 
 # user = User.create!(email: "kircho@alfaevents.mk", password: "password")
 

@@ -5,7 +5,7 @@ class Ticket < ApplicationRecord
 
   def self.print_qr_codes
     desktop_folder_path = File.expand_path("~/Desktop/alfa-tickets")
-    all.each_with_index do |ticket, i|
+    last(300).each_with_index do |ticket, i|
       qrcode = RQRCode::QRCode.new("https://www.alfatickets.mk/tickets/#{ticket.token}/enter")
       qr = qrcode.as_png(
         resize_gte_to: false,
@@ -38,7 +38,7 @@ class Ticket < ApplicationRecord
         x_offset += token_images[char.downcase].width - 1
       end
     
-      ticket_image.save("#{desktop_folder_path}/tickets/#{ticket.token}.png", :fast_rgba)
+      ticket_image.save("#{desktop_folder_path}/tickets2/#{i+1}.png", :fast_rgba)
       puts "Ticket #{i + 1} saved to #{desktop_folder_path}/tickets/#{ticket.token}.png"
     end
     puts "🎉 Done"
